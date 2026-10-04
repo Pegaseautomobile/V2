@@ -13,6 +13,69 @@
       min-height: 100vh;
     }
 
+    /* CONNEXION */
+
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 35px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 20px 60px rgba(0,0,0,.3);
+      text-align: center;
+    }
+
+    .login-logo {
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .login-box h1 {
+      margin: 0 0 8px;
+    }
+
+    .login-box p {
+      opacity: .7;
+      margin-bottom: 25px;
+    }
+
+    .login-box input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(0,0,0,.25);
+      color: inherit;
+      font-size: 16px;
+      margin-bottom: 14px;
+    }
+
+    .login-box button {
+      width: 100%;
+    }
+
+    #loginError {
+      display: none;
+      margin-top: 15px;
+      color: #ff7777;
+    }
+
+    /* ADMIN */
+
+    #adminPanel {
+      display: none;
+    }
+
     .admin-page {
       max-width: 1200px;
       margin: 0 auto;
@@ -216,265 +279,324 @@
 
 <body>
 
-  <main class="admin-page">
+  <!-- CONNEXION -->
 
-    <header class="admin-top">
-      <div class="admin-title">
-        <h1>♞ Administration</h1>
-        <p>Pégase Automobile — Gestion des véhicules</p>
-      </div>
+  <div id="loginScreen">
 
-      <div class="admin-actions">
-        <a href="index.html" class="button button-outline">
-          ← Retour au site
-        </a>
-      </div>
-    </header>
+    <div class="login-box">
 
+      <div class="login-logo">♞</div>
 
-    <div id="adminMessage" class="admin-message"></div>
+      <h1>Pégase Automobile</h1>
 
+      <p>Accès à l'administration</p>
 
-    <!-- STATISTIQUES -->
+      <form id="loginForm">
 
-    <section class="stats">
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="Mot de passe"
+          autocomplete="current-password"
+          required
+        >
 
-      <div class="stat">
-        <span>Total véhicules</span>
-        <strong id="statTotal">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Disponibles</span>
-        <strong id="statAvailable">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Réservés</span>
-        <strong id="statReserved">0</strong>
-      </div>
-
-      <div class="stat">
-        <span>Vendus</span>
-        <strong id="statSold">0</strong>
-      </div>
-
-    </section>
-
-
-    <!-- AJOUTER UNE VOITURE -->
-
-    <section class="admin-card">
-
-      <h2>➕ Ajouter une voiture</h2>
-
-      <form id="carForm">
-
-        <div class="form-grid">
-
-          <div class="form-group">
-            <label for="brand">Marque</label>
-            <input
-              id="brand"
-              name="brand"
-              type="text"
-              placeholder="Mercedes"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="model">Modèle</label>
-            <input
-              id="model"
-              name="model"
-              type="text"
-              placeholder="Classe A"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="price">Prix</label>
-            <input
-              id="price"
-              name="price"
-              type="text"
-              placeholder="24 990 €"
-              required
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="year">Année</label>
-            <input
-              id="year"
-              name="year"
-              type="number"
-              placeholder="2022"
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="km">Kilométrage</label>
-            <input
-              id="km"
-              name="km"
-              type="text"
-              placeholder="45 000 km"
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="fuel">Carburant</label>
-            <select id="fuel" name="fuel">
-              <option value="">Choisir</option>
-              <option value="Essence">Essence</option>
-              <option value="Diesel">Diesel</option>
-              <option value="Hybride">Hybride</option>
-              <option value="Électrique">Électrique</option>
-            </select>
-          </div>
-
-
-          <div class="form-group">
-            <label for="gear">Boîte de vitesses</label>
-            <select id="gear" name="gear">
-              <option value="">Choisir</option>
-              <option value="Automatique">Automatique</option>
-              <option value="Manuelle">Manuelle</option>
-            </select>
-          </div>
-
-
-          <div class="form-group">
-            <label for="location">Localisation</label>
-            <input
-              id="location"
-              name="location"
-              type="text"
-              placeholder="Serris"
-            >
-          </div>
-
-
-          <div class="form-group">
-            <label for="status">Statut</label>
-            <select id="status" name="status">
-              <option value="Disponible">Disponible</option>
-              <option value="Réservé">Réservé</option>
-              <option value="Vendu">Vendu</option>
-            </select>
-          </div>
-
-
-          <div class="form-group">
-
-            <label>Options</label>
-
-            <div class="checkbox-row">
-              <input
-                id="featured"
-                name="featured"
-                type="checkbox"
-              >
-
-              <label for="featured">
-                ⭐ Mettre ce véhicule à la une
-              </label>
-            </div>
-
-          </div>
-
-
-          <div class="form-group full">
-
-            <label for="description">
-              Description
-            </label>
-
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Décris le véhicule..."
-            ></textarea>
-
-          </div>
-
-
-          <div class="form-group full">
-
-            <label>Photos du véhicule</label>
-
-            <div class="photo-zone">
-
-              <strong>
-                📸 Ajouter plusieurs photos
-              </strong>
-
-              <p>
-                Sélectionne toutes les photos du véhicule.
-              </p>
-
-              <input
-                id="photos"
-                name="photos"
-                type="file"
-                accept="image/*"
-                multiple
-              >
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="admin-submit">
-
-          <button
-            type="submit"
-            class="button button-gold"
-          >
-            Publier le véhicule
-          </button>
-
-          <button
-            type="reset"
-            class="button button-outline"
-          >
-            Réinitialiser
-          </button>
-
-        </div>
+        <button
+          type="submit"
+          class="button button-gold"
+        >
+          Se connecter
+        </button>
 
       </form>
 
-    </section>
-
-
-    <!-- VÉHICULES -->
-
-    <section class="admin-card">
-
-      <h2>🚗 Véhicules publiés</h2>
-
-      <div
-        id="vehicleList"
-        class="vehicle-list"
-      >
-        <p>Chargement...</p>
+      <div id="loginError">
+        Mot de passe incorrect.
       </div>
 
-    </section>
+    </div>
 
-  </main>
+  </div>
+
+
+  <!-- ADMINISTRATION -->
+
+  <div id="adminPanel">
+
+    <main class="admin-page">
+
+      <header class="admin-top">
+
+        <div class="admin-title">
+
+          <h1>♞ Administration</h1>
+
+          <p>
+            Pégase Automobile — Gestion des véhicules
+          </p>
+
+        </div>
+
+        <div class="admin-actions">
+
+          <a
+            href="index.html"
+            class="button button-outline"
+          >
+            ← Retour au site
+          </a>
+
+          <button
+            id="logoutButton"
+            type="button"
+            class="button button-outline"
+          >
+            Déconnexion
+          </button>
+
+        </div>
+
+      </header>
+
+
+      <div
+        id="adminMessage"
+        class="admin-message"
+      ></div>
+
+
+      <!-- STATISTIQUES -->
+
+      <section class="stats">
+
+        <div class="stat">
+          <span>Total véhicules</span>
+          <strong id="statTotal">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>Disponibles</span>
+          <strong id="statAvailable">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>Réservés</span>
+          <strong id="statReserved">0</strong>
+        </div>
+
+        <div class="stat">
+          <span>Vendus</span>
+          <strong id="statSold">0</strong>
+        </div>
+
+      </section>
+
+
+      <!-- AJOUTER -->
+
+      <section class="admin-card">
+
+        <h2>➕ Ajouter une voiture</h2>
+
+        <form id="carForm">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+              <label for="brand">Marque</label>
+              <input
+                id="brand"
+                name="brand"
+                type="text"
+                placeholder="Mercedes"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="model">Modèle</label>
+              <input
+                id="model"
+                name="model"
+                type="text"
+                placeholder="Classe A"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="price">Prix</label>
+              <input
+                id="price"
+                name="price"
+                type="text"
+                placeholder="24 990 €"
+                required
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="year">Année</label>
+              <input
+                id="year"
+                name="year"
+                type="number"
+                placeholder="2022"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="km">Kilométrage</label>
+              <input
+                id="km"
+                name="km"
+                type="text"
+                placeholder="45 000 km"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="fuel">Carburant</label>
+              <select id="fuel" name="fuel">
+                <option value="">Choisir</option>
+                <option value="Essence">Essence</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybride">Hybride</option>
+                <option value="Électrique">Électrique</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="gear">Boîte de vitesses</label>
+              <select id="gear" name="gear">
+                <option value="">Choisir</option>
+                <option value="Automatique">Automatique</option>
+                <option value="Manuelle">Manuelle</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="location">Localisation</label>
+              <input
+                id="location"
+                name="location"
+                type="text"
+                placeholder="Serris"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="status">Statut</label>
+              <select id="status" name="status">
+                <option value="Disponible">Disponible</option>
+                <option value="Réservé">Réservé</option>
+                <option value="Vendu">Vendu</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+
+              <label>Options</label>
+
+              <div class="checkbox-row">
+
+                <input
+                  id="featured"
+                  name="featured"
+                  type="checkbox"
+                >
+
+                <label for="featured">
+                  ⭐ Mettre ce véhicule à la une
+                </label>
+
+              </div>
+
+            </div>
+
+            <div class="form-group full">
+
+              <label for="description">
+                Description
+              </label>
+
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Décris le véhicule..."
+              ></textarea>
+
+            </div>
+
+            <div class="form-group full">
+
+              <label>Photos du véhicule</label>
+
+              <div class="photo-zone">
+
+                <strong>
+                  📸 Ajouter plusieurs photos
+                </strong>
+
+                <p>
+                  Sélectionne toutes les photos du véhicule.
+                </p>
+
+                <input
+                  id="photos"
+                  name="photos"
+                  type="file"
+                  accept="image/*"
+                  multiple
+                >
+
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="admin-submit">
+
+            <button
+              type="submit"
+              class="button button-gold"
+            >
+              Publier le véhicule
+            </button>
+
+            <button
+              type="reset"
+              class="button button-outline"
+            >
+              Réinitialiser
+            </button>
+
+          </div>
+
+        </form>
+
+      </section>
+
+
+      <!-- VÉHICULES -->
+
+      <section class="admin-card">
+
+        <h2>🚗 Véhicules publiés</h2>
+
+        <div
+          id="vehicleList"
+          class="vehicle-list"
+        >
+          <p>Chargement...</p>
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
 
 
   <script src="admin.js"></script>
