@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Administration | Pégase Automobile</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      min-height: 100vh;
+    }
+
+    .admin-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+
+    .admin-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .admin-title h1 {
+      margin: 0 0 8px;
+    }
+
+    .admin-title p {
+      margin: 0;
+      opacity: .7;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 25px;
+    }
+
+    .admin-card h2 {
+      margin-top: 0;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      padding: 22px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 30px;
+      margin-top: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 13px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(0,0,0,.25);
+      color: inherit;
+      font: inherit;
+    }
+
+    .form-group textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+    }
+
+    .photo-zone {
+      border: 2px dashed rgba(255,255,255,.2);
+      border-radius: 14px;
+      padding: 30px;
+      text-align: center;
+      margin-top: 5px;
+    }
+
+    .photo-zone input {
+      margin-top: 15px;
+    }
+
+    .admin-submit {
+      margin-top: 22px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .vehicle-list {
+      display: grid;
+      gap: 15px;
+    }
+
+    .vehicle-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 18px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .vehicle-info h3 {
+      margin: 0 0 6px;
+    }
+
+    .vehicle-info p {
+      margin: 4px 0;
+      opacity: .7;
+    }
+
+    .vehicle-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .admin-message {
+      display: none;
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,.06);
+    }
+
+    @media (max-width: 800px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .admin-top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .vehicle-item {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="admin-page">
+
+    <header class="admin-top">
+      <div class="admin-title">
+        <h1>♞ Administration</h1>
+        <p>Pégase Automobile — Gestion des véhicules</p>
+      </div>
+
+      <div class="admin-actions">
+        <a href="index.html" class="button button-outline">
+          ← Retour au site
+        </a>
+      </div>
+    </header>
+
+
+    <div id="adminMessage" class="admin-message"></div>
+
+
+    <!-- STATISTIQUES -->
+
+    <section class="stats">
+
+      <div class="stat">
+        <span>Total véhicules</span>
+        <strong id="statTotal">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>Disponibles</span>
+        <strong id="statAvailable">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>Réservés</span>
+        <strong id="statReserved">0</strong>
+      </div>
+
+      <div class="stat">
+        <span>Vendus</span>
+        <strong id="statSold">0</strong>
+      </div>
+
+    </section>
+
+
+    <!-- AJOUTER UNE VOITURE -->
+
+    <section class="admin-card">
+
+      <h2>➕ Ajouter une voiture</h2>
+
+      <form id="carForm">
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="brand">Marque</label>
+            <input
+              id="brand"
+              name="brand"
+              type="text"
+              placeholder="Mercedes"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="model">Modèle</label>
+            <input
+              id="model"
+              name="model"
+              type="text"
+              placeholder="Classe A"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="price">Prix</label>
+            <input
+              id="price"
+              name="price"
+              type="text"
+              placeholder="24 990 €"
+              required
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="year">Année</label>
+            <input
+              id="year"
+              name="year"
+              type="number"
+              placeholder="2022"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="km">Kilométrage</label>
+            <input
+              id="km"
+              name="km"
+              type="text"
+              placeholder="45 000 km"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="fuel">Carburant</label>
+            <select id="fuel" name="fuel">
+              <option value="">Choisir</option>
+              <option value="Essence">Essence</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Hybride">Hybride</option>
+              <option value="Électrique">Électrique</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="gear">Boîte de vitesses</label>
+            <select id="gear" name="gear">
+              <option value="">Choisir</option>
+              <option value="Automatique">Automatique</option>
+              <option value="Manuelle">Manuelle</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+            <label for="location">Localisation</label>
+            <input
+              id="location"
+              name="location"
+              type="text"
+              placeholder="Serris"
+            >
+          </div>
+
+
+          <div class="form-group">
+            <label for="status">Statut</label>
+            <select id="status" name="status">
+              <option value="Disponible">Disponible</option>
+              <option value="Réservé">Réservé</option>
+              <option value="Vendu">Vendu</option>
+            </select>
+          </div>
+
+
+          <div class="form-group">
+
+            <label>Options</label>
+
+            <div class="checkbox-row">
+              <input
+                id="featured"
+                name="featured"
+                type="checkbox"
+              >
+
+              <label for="featured">
+                ⭐ Mettre ce véhicule à la une
+              </label>
+            </div>
+
+          </div>
+
+
+          <div class="form-group full">
+
+            <label for="description">
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Décris le véhicule..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-group full">
+
+            <label>Photos du véhicule</label>
+
+            <div class="photo-zone">
+
+              <strong>
+                📸 Ajouter plusieurs photos
+              </strong>
+
+              <p>
+                Sélectionne toutes les photos du véhicule.
+              </p>
+
+              <input
+                id="photos"
+                name="photos"
+                type="file"
+                accept="image/*"
+                multiple
+              >
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="admin-submit">
+
+          <button
+            type="submit"
+            class="button button-gold"
+          >
+            Publier le véhicule
+          </button>
+
+          <button
+            type="reset"
+            class="button button-outline"
+          >
+            Réinitialiser
+          </button>
+
+        </div>
+
+      </form>
+
+    </section>
+
+
+    <!-- VÉHICULES -->
+
+    <section class="admin-card">
+
+      <h2>🚗 Véhicules publiés</h2>
+
+      <div
+        id="vehicleList"
+        class="vehicle-list"
+      >
+        <p>Chargement...</p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="admin.js"></script>
+
+</body>
+</html>
